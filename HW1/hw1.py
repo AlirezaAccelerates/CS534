@@ -308,8 +308,8 @@ def P1B(X_TrainVal, y_TrainVal, X_train,y_train, X_validation, y_validation, X_t
     
 P1B(X_TrainVal, y_TrainVal, X_train,y_train, X_validation, y_validation, X_test, y_test)
 
-'''
-Adding the validation set for the training purpose enhances the number of training data. 
+
+p1b = '''Adding the validation set for the training purpose enhances the number of training data. 
 This enhancement in the training data could increase the performance of machine learning algorithms. 
 Thus, it would increase the R2 score and decrease RMSE values.
 As shown in the results, the performance of the developed models on the train set was roughly similar. 
@@ -317,8 +317,9 @@ However, the performance of the second model, which was developed by both traini
 on the validation set dramatically increased. This is because the model saw this set during the training 
 phase. Besides, the second model outperforms the first one on the test set. That is, the first model does 
 not follow the data trend in the test set (negative R2), while the second has better performance. Therefore, 
-with an increment in the number of training data, we had a growth in the model's performance on the test set.
-'''
+with an increment in the number of training data, we had a growth in the model's performance on the test set. '''
+print(p1b)
+
 
 #### P1C
 def P1C(X_train,y_train, X_validation, y_validation, X_test, y_test):
@@ -453,6 +454,15 @@ def P1D(X_TrainVal, y_TrainVal, X_train,y_train, X_validation, y_validation, X_t
     return W, Ridge_reg_coefs
     
 W, Ridge_reg_coefs = P1D(X_TrainVal, y_TrainVal, X_train,y_train, X_validation, y_validation, X_test, y_test)
+
+
+p1d = '''Similar to the standard linear regression part, when we added the validation set to the training data, 
+the performance metrics of the Ridge and Lasso models on the test set increased. This enhancement 
+was higher for the Ridge regression model. In addition, the performance metrics of the models on 
+the validation set had a growth. Although the performance of the Ridge model had not a considerable 
+change when we added the validation data on the training set, the Lasso model experienced modest 
+growth. '''
+print(p1d)
 
 
 ### ........................ Problem #2 ........................ ###
@@ -627,4 +637,3 @@ Return:
 model_expt = LinearRegressionWithKnowledge(learning_rate = 0.0005, Lambda = 0.9, W_expt = W)
 model_expt.fit(X_train, y_train)
 Weights = model_expt.weights()
-
