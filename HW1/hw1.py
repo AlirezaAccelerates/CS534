@@ -495,11 +495,21 @@ Return:
         self.Lambda = Lambda
         self.k = k
         
-    def Data_augmentation(self)  :
+    def Data_augmentation(self) :
 
-        Aug_data = pd.DataFrame(np.sqrt(self.Lambda)*np.identity(self.k))
-        Aug_label = pd.DataFrame(np.zeros((self.k, 1)))
-        Fake_data = pd.DataFrame(np.concatenate((X_train, Aug_data),axis=0))
+        # Centered Matrix
+        mean = np.mean(X_train, axis=0)
+        X_train_centered = X_train-mean
+		
+        Aug_data_init = np.identity(self.k)
+        l = int(np.sqrt(self.Lambda))
+        Aug_data = pd.DataFrame(np.identity(self.k))
+        Aug_label = pd.DataFrame(np.zeros((l*self.k, 1)))
+        if l > 1:
+            for i in range(l-1):
+                Aug_data = pd.DataFrame(np.concatenate((Aug_data_init, Aug_data),axis=0))
+
+        Fake_data = pd.DataFrame(np.concatenate((X_train_centered, Aug_data),axis=0))
         Fake_label = pd.concat([self.y, Aug_label], axis=0,ignore_index=True)
         return Fake_data, Fake_label
         
@@ -524,8 +534,12 @@ Return:
         Cofficients.columns = ["Fake coefficients learned", "Real cofficients learned"]
         pd.set_option('display.colheader_justify', 'center')
         print(Cofficients)
+        note = '''
+As clearly can be seen, the ridge regression estimates can be obtained 
+by ordinary least squares regression on an augmented data set.'''
+        print(note) 
         
-fake = FakeRidgeRegression(Lambda = L_optimal_Ridge, k = 25)
+fake = FakeRidgeRegression(Lambda = 4, k = 25)
 fake.fit(X_train, y_train)
 
 
